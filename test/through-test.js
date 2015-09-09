@@ -45,7 +45,6 @@ describe(__filename + "#", function() {
     expect(items.length).to.be(2);
   });
 
-
   it("can buffer content and pass downstream", function(next) {
     var buffer = [];
     var s1 = stream.stream();
@@ -80,9 +79,9 @@ describe(__filename + "#", function() {
   it("can pass to multiple through objects", function(next) {
     var s1 = stream.stream();
     var map = function(i, next) {
-      this.push(i+1);
+      this.push(i + 1);
       next();
-    }
+    };
     s1.pipe(stream.through(map)).pipe(stream.through(map)).on("data", function(num) {
       expect(num).to.be(3);
       next();
@@ -95,13 +94,12 @@ describe(__filename + "#", function() {
 
     var buffer = [];
 
-    var s = _([1,2,3]).pipe(stream.through(function(data, next) {
+    var s = _([1, 2, 3]).pipe(stream.through(function(data, next) {
       buffer.push(data);
       next();
     }, function() {
       this.push(buffer);
     }));
-
 
     s.on("data", function() {});
     s.on("end", function() {
